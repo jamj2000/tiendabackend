@@ -1,0 +1,23 @@
+{
+  "name": "tienda",
+  "version": "1.0.0",
+  "description": "Fullstack webapp",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "webapp",
+    "fullstack"
+  ],
+  "author": "",
+  "license": "GPL",
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.8.6"
+  }
+}
