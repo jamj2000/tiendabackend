@@ -1,4 +1,5 @@
 require('dotenv').config();
+const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
 const apiRoutes = require('./routes');
@@ -15,8 +16,9 @@ mongoose.connect(DB_URI, { useNewUrlParser: true })
 
 
 // MIDDLEWARE
+app.use(cors());            // Soporte para CORS
 app.use(express.json());    // IMPORTANTE: Poner esto antes de las rutas
-app.use('/api', apiRoutes);
+app.use('/api', cors(), apiRoutes);
 
 
 // SERVIDOR WEB
