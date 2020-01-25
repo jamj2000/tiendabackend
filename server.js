@@ -18,7 +18,7 @@ mongoose.connect(DB_URI, { useNewUrlParser: true })
 // MIDDLEWARE
 app.use(cors());            // Soporte para CORS
 app.use(express.json());    // IMPORTANTE: Poner esto antes de las rutas
-app.use('/api', cors(), apiRoutes);
+app.use('/api', apiRoutes);
 
 
 // SERVIDOR WEB
