@@ -2,7 +2,7 @@
 
 > **ESTE MINITUTORIAL ES UNA VERSIÓN RESUMIDA DEL BACKEND DE ESTA APLICACIÓN**
 > 
-> A tener muy en cuenta:
+> A tener en cuenta:
 >
 > - Mucho del código que aparece en este minitutorial está simplificado con fines didácticos.
 > - Para ver todo el código, revisar el código fuente de este repositorio.
