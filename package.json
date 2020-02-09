@@ -1,7 +1,9 @@
 {
-  "name": "tienda",
+  "name": "tiendabackend",
   "version": "1.0.0",
-  "description": "Fullstack webapp",
+  "description": "Backend of a Fullstack webapp",
+  "author": "jamj2000 at google dot com",
+  "license": "GPL",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,10 +11,9 @@
   },
   "keywords": [
     "webapp",
+    "backend",
     "fullstack"
   ],
-  "author": "",
-  "license": "GPL",
   "devDependencies": {
     "nodemon": "^2.0.2"
   },

@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -19,7 +20,7 @@ mongoose.connect(DB_URI, { useNewUrlParser: true })
 app.use(cors());            // Soporte para CORS
 app.use(express.json());    // IMPORTANTE: Poner esto antes de las rutas
 app.use('/api', apiRoutes);
-
+app.use(express.static(path.join(__dirname , 'public')));
 
 // SERVIDOR WEB
-app.listen(PORT || 3000, () => console.log("Servidor iniciado..."));
+app.listen(PORT, () => console.log("Servidor iniciado..."));
