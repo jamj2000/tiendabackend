@@ -173,7 +173,7 @@ También veremos que se ha creado una carpeta `node_modules` con dichos módulos
 Ahora, ya podremos ejecutar `npm run dev`, y si no hay errores, podremos abrir el navegador y acceder a la url `http://localhost:3000`.
 
 
-## Conexión a la base de datos
+## Base de datos
 
 Como servidor de base de datos vamos a usar MongoDB en su versión Cloud. Para ello podemos registrarnos en [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) en su modalidad *Free*, que nos proporciona 512 MB de almacenamiento, más que suficiente para lo que queremos hacer.
 
