@@ -19,7 +19,7 @@
 >
 > - Separación entre el backend y el frontend. 
 > - Visibilidad, fiabilidad y escalabilidad. 
-> - La API REST siempre es independiente del tipo de plataformas o lenguajes.
+> - La API REST siempre es independiente del tipo de plataforma o lenguaje.
 >
 > REST: Representational State Transfer
 
