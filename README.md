@@ -13,6 +13,12 @@
 
 ## Introducción
 
+> **Esta aplicación backend proporciona una API Rest y ofrece la información en formato JSON**.
+>
+> Esta aplicación NO sigue el patrón MVC (Modelo-Vista-Controlador).
+>
+>
+
 Para trabajar con el entorno de ejecución Node.js y su gestor de paquetes podemos realizar la instalación desde los repositorios de Debian/Ubuntu o derivadas con:
 
 ```console
@@ -38,12 +44,9 @@ npm  init  -y
 La última sentencia nos crea un archivo **`package.json`** con la metainformación del proyecto. La opción `y` o `--yes` es para que no nos pregunte y escriba una configuración por defecto en dicho archivo. Siempre podemos editarlo más adelante y modificar la version, añadir el autor, ...
 
 
-El archivo `.env` (abreviatura de *environment*) es donde pondremos las **variables de entorno**, tales con la URL de conexión a la base de datos. 
-
-
 ## Edición de package.json
 
-El archivo **`package.json`** es el archivo de gestión de proyecto y dependencias. En él. podremos editar el nombre del autor, la versión, el tipo de licencia, etc.
+El archivo **`package.json`** es el archivo de gestión de proyecto y dependencias. En él podremos editar el nombre del autor, la versión, el tipo de licencia, etc.
 
 Una parte muy importante es indicar el punto de entrada. En este proyecto será el archivo **`server.js`**, que crearemos más adelante.
 
@@ -87,7 +90,8 @@ NOTA: Los scripts se ejecutan desde el terminal de texto con `npm run` *nombre_s
 
 NOTA: `nodemon` es un paquete de Node.js que ejecuta node en mode monitor, es decir, está comprobando constantente cualquier cambio en nuestros archivos, y si detecta alguno, entonces vuelve a reiniciar el entorno de ejecución con los nuevos cambios. Esto es muy útil para el proceso de desarrollo de la aplicación.
 
-## Servidor web
+
+## Servidor web básico
 
 En el archivo **`server.js`** escribiremos el código para crear nuestro propio servidor web. En su versión mínima, solamente son necesarias 3 líneas.
 
@@ -124,7 +128,7 @@ npm  run  dev
 
 No obstante, esto dará un error. El motivo es que necesitamos instalar los paquetes **`express`** y **`nodemon`**.
 
-El primero se instalará como dependencia de aplicación y el segundo como dependencia de desarrollo. La diferencia entre uno y otro es que el primero es necesario para el funcionamiento de la aplicación, mientras que el segundo sólo es necesario para facilitar el trabajo de desarrollo.
+El primero se instalará como dependencia de aplicación y el segundo como dependencia de desarrollo. La diferencia entre uno y otro es que el primero es necesario para el funcionamiento de la aplicación, mientras que el segundo sólo es necesario para facilitar el proceso de desarrollo.
 
 Deberemos ejecutar:
 
@@ -164,21 +168,157 @@ Si echamos un vistazo al archivo **`package.json`** veremos que dichos paquetes 
 
 También veremos que se ha creado una carpeta `node_modules` con dichos módulos en su interior, además de muchos otros que son dependencias de los anteriores.
 
+Por último, también se ha creado un archivo `package-lock.json` que contiene la versión exacta de cada dependencia. Este archivo es muy importante, puesto que indicará al servidor de producción que utilice exactamente la mismas versiones de las dependencias que usamos en nuestro entorno de desarrollo, evitando así problemas en el despligue. 
+
 Ahora, ya podremos ejecutar `npm run dev`, y si no hay errores, podremos abrir el navegador y acceder a la url `http://localhost:3000`.
+
+Todo el código fuente final está disponible en el archivo **[server.js](server.js)**.
+
+
+## Servidor web completo
+
+**Ofreciendo código estático**
+
+Podemos servir código estático (HTML, CSS, imágenes, ...) añadiendo el siguiente *middleware*. 
+
+```javascript
+app.use(express.static('public'));
+```
+Esto pondrá a disposición de todo el mundo, el contenido alojado en la carpeta `public`. 
+
+No obstante, es mejor poner una ruta absoluta. Ello se hace mediante el siguiente código:
+
+```javascript
+const path = require('path');
+
+app.use(express.static(path.join(__dirname , 'public')));
+```
+
+En [`public/index.html`](public/index.html) pondremos una página con información acerca de la API. 
+
+![Info de la API](snaphots/backend.png)
+
+
+**Obteniendo información de configuración desde las variables de entorno**
+
+Utilizaremos **variables de entorno** para guardar la información de conexión a la base de datos.
+
+Para ello usaremos un archivo `.env` y el módulo `dotenv` para leer dicho archivo.
+
+Ejemplo de contenido del archivo `.env`:
+
+```
+PORT=5000
+DB_URI=mongodb://localhost:27017/basedatos
+```
+
+Código a añadir al servidor web:
+
+```javascript
+require('dotenv').config();
+
+const PORT = process.env.PORT || 3000;
+const DB_URI = process.env.DB_URI;
+```
+
+Si la variable `PORT` no está definida en el archivo `.env`, entonces se utiliza el valor 3000.
+
+La variable `DB_URI` debe estar definida en el archivo `.env`. Dicha variable contiene la URL de la base de datos. Consulta más abajo, en el apartado [Base de datos](https://github.com/jamj2000/tiendabackend#base-de-datos).
+
+**IMPORTANTE:** Debemos instalar el módulo `dotenv`:
+```
+npm  install  dotenv
+```
+
+**Conectando a una base de datos**
+
+Para conectar a una base de datos MongoDB usaremos el módulo `mongoose`.
+
+```javascript
+const mongoose = require('mongoose');
+
+// CONEXIÓN A BASE DE DATOS
+mongoose.connect(DB_URI, { useNewUrlParser: true })
+    .then(db => console.log("Conexión a BD correcta"))
+    .catch(error => console.log("Error al conectarse a la BD" + error));
+```
+
+**IMPORTANTE:** Debemos instalar el módulo `mongoose`
+```
+npm  install  mongoose
+```
+
+
+**Indicamos el archivo que contiene las rutas**
+
+Lo hacemos con el siguiente código:
+
+```javascript
+const apiRoutes = require('./routes');
+
+app.use('/api', apiRoutes);
+```
+
+Todo el código fuente del servidor está disponible en el archivo **[server.js](server.js)**.
+
 
 ## Rutas
 
+Este backend proporpociona una **API Rest** con los siguientes **end-points**:
 
-## Controlador
+```
+(GET)    /api/clientes         (Lista    todos los clientes)
+(POST)   /api/clientes         (Crea     cliente)
+(GET)    /api/clientes/:id     (Lista    cliente :id)
+(PUT)    /api/clientes/:id     (Modifica cliente :id)
+(DELETE) /api/clientes/:id     (Elimina  cliente :id)
+
+(GET)    /api/articulos        (Lista    todos los artículos)
+(POST)   /api/articulos        (Crea     artículo)
+(GET)    /api/articulos/:id    (Lista    artículo :id)
+(PUT)    /api/articulos/:id    (Modifica artículo :id)
+(DELETE) /api/articulos/:id    (Elimina  artículo :id)
+```
+
+Todo el código fuente de las rutas está disponible en el archivo **[routes.js](routes.js)**.
 
 
-## Modelo
+## Controladores
+
+
+Todo el código fuente de los controladores está disponible en el archivo **[controllers.js](controllers.js)**.
+
+## Modelos
+
+Tenemos 2 modelos:
+
+- Cliente 
+- Artículo
+
+Cada uno tiene un esquema asociado que, en este caso, es bastante simple. Cada modelo tiene únicamente 2 propiedades:
+
+```javascript
+const Cliente = mongoose.model('Cliente',
+  new mongoose.Schema({ nombre: String, apellidos: String })
+);
+
+const Articulo = mongoose.model('Articulo',
+  new mongoose.Schema({ nombre: String, precio: Number })
+);
+```
+
+Todo el código fuente de los modelos está disponible en el archivo **[models.js](models.js)**.
+
+Mongoose proporciona muchos más tipos y opciones para definición de esquemas. Puedes consultar en [Tipos de esquemas en Mongoose](https://mongoosejs.com/docs/schematypes.html)
 
 
 ## ¿Vistas?
 
-No hay. Esto no es una aplicación MVC (Modelo-Vista-Controlador).
+NO HAY. 
 
+Esto NO es una aplicación MVC (Modelo-Vista-Controlador).  
+
+Este **backend** proporciona una **API Rest** por tanto no genera vistas, sino que ofrece la información en formato **JSON** para que la aplicación frontend la renderice a su gusto.
 
 
 ## Base de datos
@@ -191,11 +331,11 @@ Una vez realizados estos pasos, conseguiremos la URL de acceso para aplicación 
 
 `mongodb+srv://`***`usuario`***`:`***`contraseña`***`@`***`servidor`***`/`***`basedatos`***`?retryWrites=true&w=majority`
 
-Y en nuestro archivo **`.env`** escribiremos la línea:
+En el archivo **`.env`** (abreviatura de *environment*) pondremos las **variables de entorno**, tales con la URL de conexión a la base de datos. En él escribiremos la línea:
 
 `DB_URI=mongodb+srv://`***`usuario`***`:`***`contraseña`***`@`***`servidor`***`/`***`basedatos`***`?retryWrites=true&w=majority`
 
-Deberemos sustituir `usuario`, `contraseña`, `servidor` y `basedatos` por los nuestros.
+Deberemos sustituir `usuario`, `contraseña`, `servidor` y `basedatos` por los que nos sean propios.
 
 > Nota: 
 >
@@ -258,7 +398,6 @@ git  push  -u  origin master
 ```
 
 
-
 ## Despliegue
 
 Para el despligue usaremos **[Heroku](https://www.heroku.com/)**.
@@ -283,15 +422,15 @@ heroku  login  --interactive
 
 Esta operación, además de crear la aplicación, reserva un repositorio git para su alojamiento.
 
-Sustituye *nombre_aplicación* por el valor que desees. 
-
-> NOTA: Muchos nombres de aplicación pueden estar ya cogidos, sobre todo si son nombres sencillos o habituales.
+> Nota: Sustituye *nombre_aplicación* por el valor que desees. 
+>
+> Ten en cuenta que muchos nombres de aplicación pueden estar ya cogidos, sobre todo si son nombres sencillos o habituales.
 
 5. Añade el vínculo al repositorio remoto de Heroku creado previamente.
 
 `git  remote  add  heroku  https://git.heroku.com/` *nombre_aplicación.git*
 
-Sustituye *nombre_aplicación* por el nombre de tu aplicación. 
+> Nota: Sustituye *nombre_aplicación* por el nombre de tu aplicación. 
 
 6. Despliega el contenido en Heroku.
 
