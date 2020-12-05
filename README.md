@@ -92,7 +92,7 @@ Esta línea indica que cuando ejecutemos `npm run dev` en el terminal, lo que se
 
 NOTA: Los scripts se ejecutan desde el terminal de texto con `npm run` *nombre_script*.
 
-NOTA: `nodemon` es un paquete de Node.js que ejecuta node en mode monitor, es decir, está comprobando constantente cualquier cambio en nuestros archivos, y si detecta alguno, entonces vuelve a reiniciar el entorno de ejecución con los nuevos cambios. Esto es muy útil para el proceso de desarrollo de la aplicación.
+NOTA: `nodemon` es un paquete de Node.js que ejecuta node en modo monitor, es decir, está comprobando constantente cualquier cambio en nuestros archivos, y si detecta alguno, entonces vuelve a reiniciar el entorno de ejecución con los nuevos cambios. Esto es muy útil para el proceso de desarrollo de la aplicación.
 
 
 ## Servidor web básico
@@ -186,7 +186,7 @@ Podemos servir código estático (HTML, CSS, imágenes, ...) añadiendo el sigui
 ```javascript
 app.use(express.static('public'));
 ```
-Esto pondrá a disposición de todo el mundo, el contenido alojado en la carpeta `public`. 
+Esto pondrá a disposición de todo el mundo el contenido alojado en la carpeta `public`. 
 
 No obstante, es mejor poner una ruta absoluta. Ello se hace mediante el siguiente código:
 
@@ -200,6 +200,23 @@ En [`public/index.html`](public/index.html) pondremos una página con informaci�
 
 ![Info de la API](snaphots/backend.png)
 
+
+**Haciendo pública nuestra API**
+
+**IMPORTANTE:** Debemos instalar el módulo `cors`
+```
+npm  install  cors
+```
+
+Este módulo proporciona funcionalidad de [Cross-Origin Resource Sharing](https://es.wikipedia.org/wiki/Intercambio_de_recursos_de_origen_cruzado)
+
+El código a añadir es:
+
+```javascript
+const cors = require('cors');
+
+app.use(cors()); 
+```
 
 **Obteniendo información de configuración desde las variables de entorno**
 
@@ -251,7 +268,7 @@ mongoose.connect(DB_URI, { useNewUrlParser: true })
     .catch(error => console.log("Error al conectarse a la BD" + error));
 ```
 
-**Indicamos el archivo que contiene las rutas**
+**Indicando el archivo que contiene las rutas**
 
 Lo hacemos con el siguiente código:
 
@@ -282,12 +299,7 @@ Este backend proporpociona una **API Rest** con los siguientes **end-points**:
 (DELETE) /api/articulos/:id    (Elimina  artículo :id)
 ```
 
-**IMPORTANTE:** Debemos instalar el módulo `cors`
-```
-npm  install  cors
-```
-
-Este módulo proporciona funcionalidad de [Cross-Origin Resource Sharing](https://es.wikipedia.org/wiki/Intercambio_de_recursos_de_origen_cruzado)
+El código fuente usado es:
 
 ```javascript
 const cors = require('cors')
@@ -304,28 +316,21 @@ router.delete ("/clientes/:id",  cors(), controller.deleteCliente);  // Delete
 router.put    ("/clientes/:id",  cors(), controller.updateCliente);  // Update
 router.post   ("/clientes",      cors(), controller.createCliente);  // Create
 
-router.get    ("/articulos",     cors(), controller.readArticulos);  // Read All
-router.get    ("/articulos/:id", cors(), controller.readArticulo);   // Read
-router.delete ("/articulos/:id", cors(), controller.deleteArticulo); // Delete
-router.put    ("/articulos/:id", cors(), controller.updateArticulo); // Update
-router.post   ("/articulos",     cors(), controller.createArticulo); // Create
+// ...
 
 module.exports = router;
 ```
-
-En este caso hemos habilitado el acceso a cada **end-point** de nuestra **API** desde cualquier URL.  
+En este caso hemos habilitado mediante `cors` el acceso a cada **end-point** de nuestra **API** desde cualquier URL. 
 
 Todo el código fuente de las rutas está disponible en el archivo **[routes.js](routes.js)**.
 
 
 ## Controladores
 
-Los controladores son los encargados de realizar las operaciones CRUD. Para ello hacen uso de cada uno de los modelos.
+Los controladores son los encargados de realizar las operaciones CRUD. Para ello hacen uso de los modelos definidos.
 
 ```javascript
 const { Cliente, Articulo } = require("./models.js");
-
-// ------- CLIENTES
 
 exports.readClientes = (req, res) => {
     Cliente.find({}, (err, data) => {
