@@ -13,15 +13,19 @@
 
 ## Introducción
 
-> **Esta aplicación backend proporciona una API Rest y ofrece la información en formato JSON**.
+> **Esta aplicación backend proporciona una API REST y ofrece la información en formato JSON**.
 >
-> Esta aplicación NO sigue el patrón MVC (Modelo-Vista-Controlador).
+> Este tipo de aplicaciones tiene las siguientes ventajas:
 >
+> - Separación entre el backend y el frontend. 
+> - Visibilidad, fiabilidad y escalabilidad. 
+> - La API REST siempre es independiente del tipo de plataformas o lenguajes.
 >
+> REST: Representational State Transfer
 
 Para trabajar con el entorno de ejecución Node.js y su gestor de paquetes podemos realizar la instalación desde los repositorios de Debian/Ubuntu o derivadas con:
 
-```console
+```bash
 sudo  apt  install  nodejs  npm
 ```
 
@@ -34,7 +38,7 @@ O, si deseamos una versión más actualizada, podemos recurrir al sitio oficial 
 
 Para iniciar el proyecto hacemos:
 
-```console
+```bash
 mkdir  tiendabackend
 cd  tiendabackend
 
@@ -93,7 +97,7 @@ NOTA: `nodemon` es un paquete de Node.js que ejecuta node en mode monitor, es de
 
 ## Servidor web básico
 
-En el archivo **`server.js`** escribiremos el código para crear nuestro propio servidor web. En su versión mínima, solamente son necesarias 3 líneas.
+En el archivo **`[server.js](server.js)`** escribiremos el código para crear nuestro propio servidor web. En su versión mínima, solamente son necesarias 3 líneas.
 
 
 ```javascript
@@ -104,7 +108,7 @@ const app = express();
 app.listen(3000);
 ```
 
-Como nuestro backend se va a destinar a proporcionar una API RESTful y el intercambio de información se va a realizar en formato JSON, modificaremos el archivo anterior para que tenga la siguiente apariencia:
+Como nuestro backend se va a destinar a proporcionar una API REST y el intercambio de información se va a realizar en formato JSON, modificaremos el archivo anterior para que tenga la siguiente apariencia:
 
 ```javascript
 const express = require('express');
@@ -118,11 +122,11 @@ app.use(express.json());
 app.listen(3000, () => console.log("Servidor iniciado..."));
 ```
 
-También hemos añadido un callback en la última línea para que, cuando el servidor web esté iniciado, nos muestre un mensaje indicando tal circunstancia.
+Hemos añadido el *midleware* de soporte de formato JSON y un callback en la última línea para que, cuando el servidor web esté iniciado, nos muestre un mensaje indicando tal circunstancia. El *midleware* es el software disponible para su ejecución entre la petición de un cliente y la respuesta del servidor.
 
-Ya podemos probar nuestro servidor web, con el comando:
+Para probar nuestro servidor web:
 
-```console
+```bash
 npm  run  dev
 ```
 
@@ -132,7 +136,7 @@ El primero se instalará como dependencia de aplicación y el segundo como depen
 
 Deberemos ejecutar:
 
-```console
+```bash
 npm  install  express
 npm  install  nodemon  -D
 ```
@@ -172,8 +176,6 @@ Por último, también se ha creado un archivo `package-lock.json` que contiene l
 
 Ahora, ya podremos ejecutar `npm run dev`, y si no hay errores, podremos abrir el navegador y acceder a la url `http://localhost:3000`.
 
-Todo el código fuente final está disponible en el archivo **[server.js](server.js)**.
-
 
 ## Servidor web completo
 
@@ -201,6 +203,11 @@ En [`public/index.html`](public/index.html) pondremos una página con informaci�
 
 **Obteniendo información de configuración desde las variables de entorno**
 
+**IMPORTANTE:** Debemos instalar el módulo `dotenv`:
+```
+npm  install  dotenv
+```
+
 Utilizaremos **variables de entorno** para guardar la información de conexión a la base de datos.
 
 Para ello usaremos un archivo `.env` y el módulo `dotenv` para leer dicho archivo.
@@ -221,16 +228,17 @@ const PORT = process.env.PORT || 3000;
 const DB_URI = process.env.DB_URI;
 ```
 
-Si la variable `PORT` no está definida en el archivo `.env`, entonces se utiliza el valor 3000.
+Si la variable `PORT` no está definida en el archivo `.env`, entonces se utiliza el valor 3000. En nuestro caso, es mejor no definir dicha variable.
 
-La variable `DB_URI` debe estar definida en el archivo `.env`. Dicha variable contiene la URL de la base de datos. Consulta más abajo, en el apartado [Base de datos](https://github.com/jamj2000/tiendabackend#base-de-datos).
+La variable `DB_URI` debe estar definida en el archivo `.env` sino la conexión a la base de datos fallará. Dicha variable contiene la URL de la base de datos. Consulta más abajo, en el apartado [Base de datos](https://github.com/jamj2000/tiendabackend#base-de-datos).
 
-**IMPORTANTE:** Debemos instalar el módulo `dotenv`:
-```
-npm  install  dotenv
-```
 
 **Conectando a una base de datos**
+
+**IMPORTANTE:** Debemos instalar el módulo `mongoose`
+```
+npm  install  mongoose
+```
 
 Para conectar a una base de datos MongoDB usaremos el módulo `mongoose`.
 
@@ -242,12 +250,6 @@ mongoose.connect(DB_URI, { useNewUrlParser: true })
     .then(db => console.log("Conexión a BD correcta"))
     .catch(error => console.log("Error al conectarse a la BD" + error));
 ```
-
-**IMPORTANTE:** Debemos instalar el módulo `mongoose`
-```
-npm  install  mongoose
-```
-
 
 **Indicamos el archivo que contiene las rutas**
 
@@ -280,11 +282,60 @@ Este backend proporpociona una **API Rest** con los siguientes **end-points**:
 (DELETE) /api/articulos/:id    (Elimina  artículo :id)
 ```
 
+**IMPORTANTE:** Debemos instalar el módulo `cors`
+```
+npm  install  cors
+```
+
+Este módulo proporciona funcionalidad de [Cross-Origin Resource Sharing](https://es.wikipedia.org/wiki/Intercambio_de_recursos_de_origen_cruzado)
+
+```javascript
+const cors = require('cors')
+const express = require("express");
+const controller = require("./controllers.js");
+
+const router = express.Router();
+
+// --------------- API REST CRUD
+
+router.get    ("/clientes",      cors(), controller.readClientes);   // Read All
+router.get    ("/clientes/:id",  cors(), controller.readCliente);    // Read
+router.delete ("/clientes/:id",  cors(), controller.deleteCliente);  // Delete
+router.put    ("/clientes/:id",  cors(), controller.updateCliente);  // Update
+router.post   ("/clientes",      cors(), controller.createCliente);  // Create
+
+router.get    ("/articulos",     cors(), controller.readArticulos);  // Read All
+router.get    ("/articulos/:id", cors(), controller.readArticulo);   // Read
+router.delete ("/articulos/:id", cors(), controller.deleteArticulo); // Delete
+router.put    ("/articulos/:id", cors(), controller.updateArticulo); // Update
+router.post   ("/articulos",     cors(), controller.createArticulo); // Create
+
+module.exports = router;
+```
+
+En este caso hemos habilitado el acceso a cada **end-point** de nuestra **API** desde cualquier URL.  
+
 Todo el código fuente de las rutas está disponible en el archivo **[routes.js](routes.js)**.
 
 
 ## Controladores
 
+Los controladores son los encargados de realizar las operaciones CRUD. Para ello hacen uso de cada uno de los modelos.
+
+```javascript
+const { Cliente, Articulo } = require("./models.js");
+
+// ------- CLIENTES
+
+exports.readClientes = (req, res) => {
+    Cliente.find({}, (err, data) => {
+        if (err) res.json({ error: err });
+        else res.json(data);
+    });
+}
+
+// ...
+```
 
 Todo el código fuente de los controladores está disponible en el archivo **[controllers.js](controllers.js)**.
 
@@ -318,7 +369,7 @@ NO HAY.
 
 Esto NO es una aplicación MVC (Modelo-Vista-Controlador).  
 
-Este **backend** proporciona una **API Rest** por tanto no genera vistas, sino que ofrece la información en formato **JSON** para que la aplicación frontend la renderice a su gusto.
+Este **backend** proporciona una **API Rest**, por tanto no genera vistas, sino que ofrece la información en formato **JSON** para que la aplicación frontend la renderice a su gusto.
 
 
 ## Base de datos
@@ -330,6 +381,8 @@ Una vez registrados, crearemos un cluster (por defecto son de 3 máquinas), lueg
 Una vez realizados estos pasos, conseguiremos la URL de acceso para aplicación de Node.js. Tiene un formato similar al siguiente:
 
 `mongodb+srv://`***`usuario`***`:`***`contraseña`***`@`***`servidor`***`/`***`basedatos`***`?retryWrites=true&w=majority`
+
+**Guardamos datos de conexión en variable de entorno**
 
 En el archivo **`.env`** (abreviatura de *environment*) pondremos las **variables de entorno**, tales con la URL de conexión a la base de datos. En él escribiremos la línea:
 
