@@ -37,14 +37,6 @@ npm  init  -y
 
 La última sentencia nos crea un archivo **`package.json`** con la metainformación del proyecto. La opción `y` o `--yes` es para que no nos pregunte y escriba una configuración por defecto en dicho archivo. Siempre podemos editarlo más adelante y modificar la version, añadir el autor, ...
 
-Es muy aconsejable crear un archivo `.gitignore` con el siguiente contenido:
-
-```
-node_modules/
-.env
-```
-
-De esta forma indicamos que la carpeta `node_modules` y el archivo `.env` no serán incluidos en el repositorio, sólo permanecerán en el directorio de trabajo.
 
 El archivo `.env` (abreviatura de *environment*) es donde pondremos las **variables de entorno**, tales con la URL de conexión a la base de datos. 
 
@@ -174,6 +166,20 @@ También veremos que se ha creado una carpeta `node_modules` con dichos módulos
 
 Ahora, ya podremos ejecutar `npm run dev`, y si no hay errores, podremos abrir el navegador y acceder a la url `http://localhost:3000`.
 
+## Rutas
+
+
+## Controlador
+
+
+## Modelo
+
+
+## ¿Vistas?
+
+No hay. Esto no es una aplicación MVC (Modelo-Vista-Controlador).
+
+
 
 ## Base de datos
 
@@ -200,3 +206,101 @@ Deberemos sustituir `usuario`, `contraseña`, `servidor` y `basedatos` por los n
 >
 > `mongodb://localhost:27017/`*basedatos*
 
+
+## Control de versiones (Git)
+
+Para el control de versiones se usará **git** y **[GitHub](https://github.com)**.
+
+Seguiremos los siguientes pasos:
+
+1. Inicializa el repositorio local:
+
+```
+git  init
+```
+
+2. Edita el archivo `.gitignore` con el siguiente contenido:
+
+```
+node_modules/
+.env
+```
+
+De esta forma indicamos que la carpeta `node_modules` y el archivo `.env` no serán incluidos en el repositorio, sólo permanecerán en el directorio de trabajo. 
+
+`node_modules` contiene las dependencias y no es aconsejable añadirlo al repositorio. Su contenido será *re-**creado*** a partir  del archivo `package-lock.json` una vez se despliegue en producción.
+
+`.env` es el archivo que guarda las **variables de entorno**. Dicho contenido nunca debe añadirse al repositorio, puesto que puede contener información sensible, tal como URLs, usuarios, contraseñas, ... 
+
+
+3. Añade todo el contenido al repositorio:
+
+```
+git  add  .
+git  commit  -m "Añadido contenido"
+```
+
+4. Crea un repositorio totalmente vacío en GitHub.
+
+Una vez hecho, copia la URL de dicho repositorio.
+
+5. Añade el vínculo al repositorio remoto de GitHub creado previamente.
+
+`git  remote  add  origin  https://github.com/` *usuario* `/` *repositorio.git*
+
+Sustituye *usuario* y *repositorio.git* por tu usuario y tu repositorio. 
+
+
+6. Sube el contenido al repositorio remoto de Github.
+
+```
+git  push  -u  origin master
+```
+
+
+
+## Despliegue
+
+Para el despligue usaremos **[Heroku](https://www.heroku.com/)**.
+
+Seguiremos los siguientes pasos:
+
+1. Si no tienes cuenta en Heroku, crea una.
+
+Para ello, visita **[Heroku](https://www.heroku.com/)** y date de alta en el plan *Free*.
+
+2. Instala la herramienta `heroku-cli`. En [este enlace](https://devcenter.heroku.com/articles/heroku-cli) tienes la información necesaria.
+
+3. Inicia sesión en el terminal.
+
+```
+heroku  login  --interactive
+```
+
+4. Crea una nueva aplicación.
+
+`heroku  apps:create` *nombre_aplicación*  
+
+Esta operación, además de crear la aplicación, reserva un repositorio git para su alojamiento.
+
+Sustituye *nombre_aplicación* por el valor que desees. 
+
+> NOTA: Muchos nombres de aplicación pueden estar ya cogidos, sobre todo si son nombres sencillos o habituales.
+
+5. Añade el vínculo al repositorio remoto de Heroku creado previamente.
+
+`git  remote  add  heroku  https://git.heroku.com/` *nombre_aplicación.git*
+
+Sustituye *nombre_aplicación* por el nombre de tu aplicación. 
+
+6. Despliega el contenido en Heroku.
+
+```
+git  push  heroku  master
+```
+
+7. Comprueba su funcionamiento.
+
+```
+heroku  open
+```
