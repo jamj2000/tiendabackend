@@ -2,6 +2,8 @@
 
 > **ESTE MINITUTORIAL ES UNA VERSIÓN RESUMIDA DEL BACKEND DE ESTA APLICACIÓN**
 > 
+> Demo desplegada en [Heroku](https://tiendabackend.herokuapp.com)
+>
 > A tener en cuenta:
 >
 > - Mucho del código que aparece en este minitutorial está simplificado con fines didácticos.
