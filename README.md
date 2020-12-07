@@ -97,7 +97,7 @@ NOTA: `nodemon` es un paquete de Node.js que ejecuta node en modo monitor, es de
 
 ## Servidor web básico
 
-En el archivo **`[server.js](server.js)`** escribiremos el código para crear nuestro propio servidor web. En su versión mínima, solamente son necesarias 3 líneas.
+En el archivo **[`server.js`](server.js)** escribiremos el código para crear nuestro propio servidor web. En su versión mínima, solamente son necesarias 3 líneas.
 
 
 ```javascript
@@ -232,7 +232,7 @@ Para ello usaremos un archivo `.env` y el módulo `dotenv` para leer dicho archi
 Ejemplo de contenido del archivo `.env`:
 
 ```
-PORT=5000
+PORT=3000
 DB_URI=mongodb://localhost:27017/basedatos
 ```
 
@@ -278,7 +278,7 @@ const apiRoutes = require('./routes');
 app.use('/api', apiRoutes);
 ```
 
-Todo el código fuente del servidor está disponible en el archivo **[server.js](server.js)**.
+Todo el código fuente del servidor está disponible en el archivo **[`server.js`](server.js)**.
 
 
 ## Rutas
@@ -335,7 +335,7 @@ const { Cliente, Articulo } = require("./models.js");
 exports.readClientes = (req, res) => {
     Cliente.find({}, (err, data) => {
         if (err) res.json({ error: err });
-        else res.json(data);
+        else     res.json(data);
     });
 }
 
