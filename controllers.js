@@ -3,28 +3,28 @@ const { Cliente, Articulo } = require("./models.js");
 
 // ------- CLIENTES
 
-exports.readClientes = (req, res) => {
+exports.readClientes = (req, res) =>
     Cliente.find({}, (err, data) => {
         if (err) res.json({ error: err });
         else     res.json(data);
     });
-}
 
-exports.readCliente = (req, res) => {
+
+exports.readCliente = (req, res) =>
     Cliente.findOne({ _id: req.params.id }, (err, data) => {
         if (err) res.json({ error: err });
         else     res.json(data);
     });
-}
 
-exports.deleteCliente = (req, res) => {
+
+exports.deleteCliente = (req, res) =>
     Cliente.findOneAndRemove({ _id: req.params.id }, (err, data) => {
         if (err) res.json({ error: err });
         else     res.json(data);
     });
-}
 
-exports.updateCliente = (req, res) => {
+
+exports.updateCliente = (req, res) =>
     Cliente.findOneAndUpdate(
         { _id: req.params.id },
         { $set: { nombre: req.body.nombre, apellidos: req.body.apellidos } }, 
@@ -33,41 +33,42 @@ exports.updateCliente = (req, res) => {
             else     res.json(data);
         }
     );
-}
 
-exports.createCliente = (req, res) => {
-    const cliente = new Cliente({ nombre: req.body.nombre, apellidos: req.body.apellidos });
-    cliente.save((err, data) => {
+
+exports.createCliente = (req, res) =>
+    new Cliente({ nombre: req.body.nombre, apellidos: req.body.apellidos })
+    .save((err, data) => {
         if (err) res.json({ error: err });
         else     res.json(data);
     });
-}
+
 
 
 // ------ ARTÍCULOS
 
-exports.readArticulos = (req, res) => {
+exports.readArticulos = (req, res) =>
     Articulo.find({}, (err, data) => {
         if (err) res.json({ error: err });
         else     res.json(data);
     });
-}
 
-exports.readArticulo = (req, res) => {
+
+exports.readArticulo = (req, res) =>
     Articulo.findOne({ _id: req.params.id }, (err, data) => {
         if (err) res.json({ error: err });
         else     res.json(data);
     });
-}
 
-exports.deleteArticulo = (req, res) => {
+
+exports.deleteArticulo = (req, res) =>
     Articulo.findOneAndRemove({ _id: req.params.id }, (err, data) => {
         if (err) res.json({ error: err });
         else     res.json(data);
     });
-}
 
-exports.updateArticulo = (req, res) => {
+
+
+exports.updateArticulo = (req, res) =>
     Articulo.findOneAndUpdate(
         { _id: req.params.id },
         { $set: { nombre: req.body.nombre, precio: req.body.precio } }, 
@@ -76,12 +77,12 @@ exports.updateArticulo = (req, res) => {
             else     res.json(data);
         }
     );
-}
 
-exports.createArticulo = (req, res) => {
-    const articulo = new Articulo({ nombre: req.body.nombre, precio: req.body.precio });
-    articulo.save((err, data) => {
+
+exports.createArticulo = (req, res) =>
+    new Articulo({ nombre: req.body.nombre, precio: req.body.precio })
+    .save((err, data) => {
         if (err) res.json({ error: err });
         else     res.json(data);
     });
-}
+
