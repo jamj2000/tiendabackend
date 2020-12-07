@@ -38,9 +38,9 @@ O, si deseamos una versión más actualizada, podemos recurrir al sitio oficial 
 
 Para iniciar el proyecto hacemos:
 
-```bash
+```
 mkdir  tiendabackend
-cd  tiendabackend
+cd     tiendabackend
 
 npm  init  -y
 ```
