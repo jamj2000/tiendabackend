@@ -179,7 +179,7 @@ Ahora, ya podremos ejecutar `npm run dev`, y si no hay errores, podremos abrir e
 
 ## Servidor web completo
 
-**Ofreciendo código estático**
+### Sirviendo código estático
 
 Podemos servir código estático (HTML, CSS, imágenes, ...) añadiendo el siguiente *middleware*. 
 
@@ -201,7 +201,7 @@ En [`public/index.html`](public/index.html) pondremos una página con informaci�
 ![Info de la API](snapshots/backend.png)
 
 
-**Haciendo pública nuestra API**
+### Haciendo pública nuestra API
 
 **IMPORTANTE:** Debemos instalar el módulo `cors`
 ```
@@ -218,7 +218,7 @@ const cors = require('cors');
 app.use(cors()); 
 ```
 
-**Obteniendo información de configuración desde las variables de entorno**
+### Obteniendo información de configuración desde las variables de entorno
 
 **IMPORTANTE:** Debemos instalar el módulo `dotenv`:
 ```
@@ -250,7 +250,7 @@ Si la variable `PORT` no está definida en el archivo `.env`, entonces se utiliz
 La variable `DB_URI` debe estar definida en el archivo `.env` sino la conexión a la base de datos fallará. Dicha variable contiene la URL de la base de datos. Consulta más abajo, en el apartado [Base de datos](https://github.com/jamj2000/tiendabackend#base-de-datos).
 
 
-**Conectando a una base de datos**
+### Conectando a una base de datos
 
 **IMPORTANTE:** Debemos instalar el módulo `mongoose`
 ```
@@ -268,7 +268,7 @@ mongoose.connect(DB_URI, { useNewUrlParser: true })
     .catch(error => console.log("Error al conectarse a la BD" + error));
 ```
 
-**Indicando el archivo que contiene las rutas**
+### Indicando el archivo que contiene las rutas
 
 Lo hacemos con el siguiente código:
 
@@ -387,7 +387,7 @@ Una vez realizados estos pasos, conseguiremos la URL de acceso para aplicación 
 
 `mongodb+srv://`***`usuario`***`:`***`contraseña`***`@`***`servidor`***`/`***`basedatos`***`?retryWrites=true&w=majority`
 
-**Guardamos datos de conexión en variable de entorno**
+### Guardamos datos de conexión en variable de entorno
 
 En el archivo **`.env`** (abreviatura de *environment*) pondremos las **variables de entorno**, tales con la URL de conexión a la base de datos. En él escribiremos la línea:
 
