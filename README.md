@@ -241,7 +241,7 @@ Código a añadir al servidor web:
 ```javascript
 require('dotenv').config();
 
-const PORT = process.env.PORT || 3000;
+const PORT   = process.env.PORT || 3000;
 const DB_URI = process.env.DB_URI;
 ```
 
@@ -263,7 +263,7 @@ Para conectar a una base de datos MongoDB usaremos el módulo `mongoose`.
 const mongoose = require('mongoose');
 
 // CONEXIÓN A BASE DE DATOS
-mongoose.connect(DB_URI, { useNewUrlParser: true })
+mongoose.connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(db => console.log("Conexión a BD correcta"))
     .catch(error => console.log("Error al conectarse a la BD" + error));
 ```
@@ -322,7 +322,7 @@ module.exports = router;
 ```
 En este caso hemos habilitado mediante `cors` el acceso a cada **end-point** de nuestra **API** desde cualquier URL. 
 
-Todo el código fuente de las rutas está disponible en el archivo **[routes.js](routes.js)**.
+Todo el código fuente de las rutas está disponible en el archivo **[`routes.js`](routes.js)**.
 
 
 ## Controladores
@@ -332,17 +332,16 @@ Los controladores son los encargados de realizar las operaciones CRUD. Para ello
 ```javascript
 const { Cliente, Articulo } = require("./models.js");
 
-exports.readClientes = (req, res) => {
+exports.readClientes = (req, res) => 
     Cliente.find({}, (err, data) => {
         if (err) res.json({ error: err });
         else     res.json(data);
     });
-}
 
 // ...
 ```
 
-Todo el código fuente de los controladores está disponible en el archivo **[controllers.js](controllers.js)**.
+Todo el código fuente de los controladores está disponible en el archivo **[`controllers.js`](controllers.js)**.
 
 ## Modelos
 
@@ -363,7 +362,7 @@ const Articulo = mongoose.model('Articulo',
 );
 ```
 
-Todo el código fuente de los modelos está disponible en el archivo **[models.js](models.js)**.
+Todo el código fuente de los modelos está disponible en el archivo **[`models.js`](models.js)**.
 
 Mongoose proporciona muchos más tipos y opciones para definición de esquemas. Puedes consultar en [Tipos de esquemas en Mongoose](https://mongoosejs.com/docs/schematypes.html)
 
