@@ -500,3 +500,13 @@ git  push  heroku  master
 ```
 heroku  open
 ```
+
+### A tener en cuenta
+
+Puesto que el archivo `.env` no se debe subir al sistema de control de versiones, en Heroku debemos declarar las variables de entorno desde la interfaz web o desde el CLI.
+
+En concreto, en esta aplicación debemos configurar la variable DB_URI con la URI de conexión a la base de datos.
+
+![heroku env](assets/heroku-env.png)
+
+
