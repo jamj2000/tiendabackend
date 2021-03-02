@@ -507,6 +507,6 @@ Puesto que el archivo `.env` no se debe subir al sistema de control de versiones
 
 En concreto, en esta aplicación debemos configurar la variable DB_URI con la URI de conexión a la base de datos.
 
-![heroku env](assets/heroku-env.png)
+![heroku env](snapshots/heroku-env.png)
 
 
