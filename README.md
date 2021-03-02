@@ -507,6 +507,25 @@ Puesto que el archivo `.env` no se debe subir al sistema de control de versiones
 
 En concreto, en esta aplicación debemos configurar la variable DB_URI con la URI de conexión a la base de datos.
 
+**Desde la interfaz web**
+
 ![heroku env](snapshots/heroku-env.png)
 
+**Desde CLI**
 
+```bash
+heroku login -i
+heroku config:set DB_URI=mongodb+srv://...  -a tiendabackend
+```
+
+Para ver las variables configuradas, ejecutamos:
+
+```bash
+heroku config -a tiendabackend
+```
+
+> NOTA: Si deseamos eliminar una variable, lo hacemos con
+>
+> `heroku config:unset NOMBRE_VARIABLE -a tiendabackend`
+
+> NOTA: Sustituye *tiendabackend* por el nombre de tu aplicación.
