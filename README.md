@@ -75,6 +75,7 @@ El archivo `package.json` tendrá una apariencia semejante a la siguiente:
   "license": "GPL",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js"
   },
@@ -157,6 +158,7 @@ Si echamos un vistazo al archivo **`package.json`** veremos que dichos paquetes 
   "license": "GPL",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",    
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js"
   },
@@ -461,6 +463,10 @@ git  push  -u  origin master
 
 ## Despliegue
 
+
+### Despliegue en Heroku
+
+
 Para el despligue usaremos **[Heroku](https://www.heroku.com/)**.
 
 Seguiremos los siguientes pasos:
@@ -533,3 +539,22 @@ heroku config -a tiendabackend
 > `heroku config:unset NOMBRE_VARIABLE -a tiendabackend`
 
 > NOTA: Sustituye *tiendabackend* por el nombre de tu aplicación.
+
+
+### Despliegue en Render (render.com)
+
+Pasos a seguir:
+
+- Acceder mediante credenciales Github.
+- Conceder permisos.
+- Buscar repositorio de Github a desplegar.
+- Añadir las variables de entorno necesarias. En este caso la variable DB_URI.
+- Configurar el nombre de aplicación y dominio.
+
+
+### Despliegue en Railway (railway.app)
+
+
+
+### Despliegue en Cyclic (cyclic.sh)
+
