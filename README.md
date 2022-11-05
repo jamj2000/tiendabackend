@@ -555,6 +555,24 @@ Pasos a seguir:
 ### Despliegue en Railway (railway.app)
 
 
+Pasos a seguir:
+
+- Acceder mediante credenciales Github.
+- Conceder permisos.
+- Buscar repositorio de Github a desplegar.
+- Añadir las variables de entorno necesarias. En este caso la variable DB_URI.
+- Configurar el nombre de aplicación y dominio.
+
+
 
 ### Despliegue en Cyclic (cyclic.sh)
+
+
+Pasos a seguir:
+
+- Acceder mediante credenciales Github.
+- Conceder permisos.
+- Buscar repositorio de Github a desplegar.
+- Añadir las variables de entorno necesarias. En este caso la variable DB_URI.
+- Configurar el nombre de aplicación y dominio.
 
