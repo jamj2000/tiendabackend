@@ -551,6 +551,48 @@ Pasos a seguir:
 - Añadir las variables de entorno necesarias. En este caso la variable DB_URI.
 - Configurar el nombre de aplicación y dominio.
 
+Pasos a seguir en mayor detalle:
+
+0. Nos registramos en el sitio [render.com](https://www.render.com)
+
+![render00](snapshots/render00.png)
+
+Es recomendable hacerlo con nuestra cuenta de GitHub.
+
+1. Pulsanos en **New Web Service**
+
+![render01](snapshots/render01.png)
+
+2. Pulsamos en **Configure account**
+
+![render02](snapshots/render02.png)
+
+3.Pulsamos **Connect** en el repositorio que queramos desplegar.
+
+![render03](snapshots/render03.png)
+
+4. Configuramos el nombre de la aplicación y otros parámetros.
+
+![render04](snapshots/render04.png)
+
+5. Seleccionamos el plan **Free**.
+
+![render05](snapshots/render05.png)
+
+6. **IMPORTANTE:** Añadimos las variables de entorno.
+
+![render06](snapshots/render06.png)
+![render07](snapshots/render07.png)
+
+Finalmente pulsaremos en **Create Web Service**
+
+7. Comprobamos si todo es correcto.
+
+Aquí podremos ver los logs del despliegue. Y también tenemos la URL donde la aplicación está disponible.
+
+![render08](snapshots/render08.png)
+
+
 
 ### Despliegue en Railway (railway.app)
 
