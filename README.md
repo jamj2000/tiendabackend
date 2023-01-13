@@ -2,7 +2,7 @@
 
 > **ESTE MINITUTORIAL ES UNA VERSIÓN RESUMIDA DEL BACKEND DE ESTA APLICACIÓN**
 > 
-> Demo desplegada en
+> Demo ~~~desplegada~~~ en
 > - [~~~Heroku~~~](https://tiendabackend.herokuapp.com)
 > - [Render](https://tiendabackend.onrender.com)
 > - [Railway](https://tiendabackend.up.railway.app/)
