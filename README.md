@@ -3,6 +3,7 @@
 > **ESTE MINITUTORIAL ES UNA VERSIÓN RESUMIDA DEL BACKEND DE ESTA APLICACIÓN**
 > 
 > Demo desplegada en
+> - [Fly.io](https://tiendabackend.fly.dev)
 > - [Render](https://tiendabackend.onrender.com)
 > - [Railway](https://tiendabackend.up.railway.app/)
 > - [Cyclic](https://tiendabackend.cyclic.app/)
@@ -540,6 +541,17 @@ heroku config -a tiendabackend
 > NOTA: Sustituye *tiendabackend* por el nombre de tu aplicación.
 
 
+
+### Despliegue en Fly.io
+
+```console
+flyctl launch
+flyctl deploy
+flyctl secrets set DB_URI="mongodb+srv://usuario:contraseña@cluster0.hhmhh.mongodb.net/tienda?retryWrites=true&w=majority"
+```
+ 
+En el último comando deberas sustituir el valor `mongodb+srv://...` por la URI de tu base de datos.
+ 
 ### Despliegue en Render (render.com)
 
 Pasos a seguir:
